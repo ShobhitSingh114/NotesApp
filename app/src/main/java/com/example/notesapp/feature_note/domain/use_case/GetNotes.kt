@@ -13,6 +13,7 @@ class GetNotes(
     operator fun invoke(
         noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending)
     ): Flow<List<Note>> {
+        // map = returns a new collection without modifying the original one.
         return repository.getNotes().map { notes ->
             when(noteOrder.orderType) {
                 is OrderType.Ascending -> {
