@@ -17,7 +17,7 @@ data class Note(
     val timestamp: Long,
     val color: Int
 ){
-    // here providing fixed Lisit of Color list
+    // here providing fixed List of Color list
     companion object {
         val noteColors = listOf(RedOrange, RedPink, BabyBlue, Violet, LightGreen)
     }
