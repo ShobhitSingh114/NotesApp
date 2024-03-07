@@ -17,7 +17,7 @@ interface NoteDao {
     fun getNotes(): Flow<List<Note>>
 
     @Query("SELECT * FROM Note WHERE id = :id")
-    suspend fun getNotesById(id: Int): Note?
+    suspend fun getNoteById(id: Int): Note?
 
     // If conflict happen then replace the existing content with the new one
     // This way it works as insert and update
