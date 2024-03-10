@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +26,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -39,6 +41,7 @@ import androidx.navigation.NavController
 import com.example.notesapp.R
 import com.example.notesapp.feature_note.domain.model.Note
 import com.example.notesapp.feature_note.presentation.add_edit_note.components.TransparentHintTextField
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
@@ -59,19 +62,36 @@ fun AddEditNoteScreen(
     }
     val scope = rememberCoroutineScope()
 
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when(event) {
+                is AddEditNoteViewModel.UiEvent.ShowSnackbar -> {
+//                    scaffoldState.snackbarHostState.showSnackbar(
+//                        message = event.message
+//                    )
+                    snackBarHostState.showSnackbar(message = event.message)
+                }
+                is AddEditNoteViewModel.UiEvent.SaveNote -> {
+                    navController.navigateUp()
+                }
+            }
+        }
+    }
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     viewModel.onEvent(AddEditNoteEvent.SaveNote)
                 },
+                shape = CircleShape,
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
-//                Icon(imageVector = Icons.Default.Save, contentDescription = "Save note")
-                Icon(painter = painterResource(id = R.drawable.save), contentDescription = "Save note")
+                Icon(imageVector = Icons.Default.Save, contentDescription = "Save note")
+//                Icon(painter = painterResource(id = R.drawable.save), contentDescription = "Save note")
             }
         },
-        snackbarHost = { SnackbarHost(hostState = snackBarHostState)  }
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
     ) { paddingValues ->
 
         Column(
@@ -79,6 +99,7 @@ fun AddEditNoteScreen(
                 .fillMaxSize()
                 .background(noteBackgroundAnimatable.value)
                 .padding(16.dp)
+                .padding(paddingValues)
         ) {
             Row(
                 modifier = Modifier
