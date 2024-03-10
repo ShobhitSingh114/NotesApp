@@ -23,6 +23,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -69,7 +70,10 @@ fun AddEditNoteScreen(
 //                    scaffoldState.snackbarHostState.showSnackbar(
 //                        message = event.message
 //                    )
-                    snackBarHostState.showSnackbar(message = event.message)
+                    snackBarHostState.showSnackbar(
+                        message = event.message,
+                        duration = SnackbarDuration.Short
+                    )
                 }
                 is AddEditNoteViewModel.UiEvent.SaveNote -> {
                     navController.navigateUp()
