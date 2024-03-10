@@ -34,7 +34,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -50,7 +49,7 @@ fun NotesScreen(
 ) {
     val state = viewModel.state.value
 //    val scaffoldState = remember { SnackbarHostState() }
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
     Scaffold(
@@ -62,7 +61,7 @@ fun NotesScreen(
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Note")
             }
         },
-        snackbarHost = { SnackbarHost(snackbarHostState)}
+        snackbarHost = { SnackbarHost(snackBarHostState)}
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -123,7 +122,7 @@ fun NotesScreen(
                         onDeleteClick = {
                             viewModel.onEvent(NotesEvent.DeleteNote(note))
                             scope.launch {
-                                val result = snackbarHostState.showSnackbar(
+                                val result = snackBarHostState.showSnackbar(
                                     message = "Note deleted",
                                     actionLabel = "Undo"
                                 )
