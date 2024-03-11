@@ -26,6 +26,7 @@ object AppModule {
         return Room.databaseBuilder(
             app,
             NoteDatabase::class.java,
+            // "notes_db"
             NoteDatabase.DATABASE_NAME
         ).build()
     }
