@@ -105,6 +105,7 @@ fun AddEditNoteScreen(
                 .padding(16.dp)
                 .padding(paddingValues)
         ) {
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -140,6 +141,7 @@ fun AddEditNoteScreen(
                     )
                 }
             }
+
             Spacer(modifier = Modifier.height(16.dp))
             TransparentHintTextField(
                 text = titleState.text,
